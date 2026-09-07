@@ -1,5 +1,6 @@
 import debug from "debug";
 import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 
 const logSocket = debug("chat:socket");
 
@@ -14,7 +15,10 @@ const init = async (socket) => {
   socket.on("newMessage", logSocket);
 
   return (
+        <BrowserRouter>   
           <App socket = {socket} />
+        </BrowserRouter>   
+
   );
 };
 

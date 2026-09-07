@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@hexlet/chat-server": "^2.0.4",
+    "@mantine/form": "^9.6.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.3",
     "socket.io-client": "^4.8.3"
   },
   "devDependencies": {
