@@ -10,8 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/server": "^11.11.0",
     "@hexlet/chat-server": "^2.0.4",
+    "@mantine/core": "^9.6.0",
     "@mantine/form": "^9.6.0",
+    "@mantine/hooks": "^9.6.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.3",

@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import init from './init.jsx'
 import { io } from 'socket.io-client';
-import './index.css'
+import '@mantine/core/styles.css'
 
 const app = async () => {
   const root = createRoot(document.querySelector("#chat"));

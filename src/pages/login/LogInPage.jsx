@@ -1,6 +1,12 @@
+import LoginForm from "../../features/auth/ui/LoginForm"
+
 const LogInPage = ()=> {
     return (
-        'log in'
+        <>
+                'log in'
+<LoginForm></LoginForm>
+        </>
+
     )
 }
 
