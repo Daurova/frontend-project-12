@@ -1,13 +1,15 @@
-import LoginForm from "../../features/auth/ui/LoginForm"
+import { Navigate } from "react-router-dom";
+import LoginForm from "../../features/auth/ui/LoginForm.jsx";
+import useAuthStore from "../../app/store/authStore.js";
 
-const LogInPage = ()=> {
-    return (
-        <>
-                'log in'
-<LoginForm></LoginForm>
-        </>
+const LogInPage = () => {
+  const token = useAuthStore((state) => state.token);
+  
+  if (token) {
+    return <Navigate to="/" replace />;
+  }
 
-    )
-}
+  return <LoginForm />;
+};
 
-export default LogInPage
+export default LogInPage;
