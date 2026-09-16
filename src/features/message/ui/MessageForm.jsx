@@ -1,7 +1,7 @@
 import { useForm } from '@mantine/form';
 import { TextInput, Button, Group } from '@mantine/core';
 
-export function MessageForm({ onSubmit }) {
+export function MessageForm({ onSubmit, loading }) {  // ← добавь loading
   const form = useForm({
     initialValues: {
       body: '',
@@ -21,9 +21,12 @@ export function MessageForm({ onSubmit }) {
         <TextInput
           placeholder="Введите сообщение..."
           style={{ flex: 1 }}
+          disabled={loading}  // ← раскомментируй
           {...form.getInputProps('body')}
         />
-        <Button type="submit">Отправить</Button>
+        <Button type="submit" loading={loading}>  {/* ← добавь loading */}
+          Отправить
+        </Button>
       </Group>
     </form>
   );
