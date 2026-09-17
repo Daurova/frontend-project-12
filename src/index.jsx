@@ -6,6 +6,8 @@ import '@mantine/core/styles.css'
 const app = async () => {
   const root = createRoot(document.querySelector("#chat"));
   const socket = io();
+  window.debugSocket = socket;
+
   root.render(await init(socket));
 };
 
