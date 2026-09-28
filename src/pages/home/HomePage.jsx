@@ -1,46 +1,70 @@
-import { Flex, Loader } from '@mantine/core';
+import { Badge, Flex, Loader } from '@mantine/core';
 import { useChannels } from '../../entities/channel/model/useChannels';
-import { useMessages, useSendMessage } from '../../entities/message/model/useMessages';
+import { useMessages } from '../../entities/message/model/useMessages';
 import { Sidebar } from '../../features/chat/ui/Sidebar';
 import { ChatArea } from '../../features/chat/ui/ChatArea';
 import { useSocketEvent } from '../../shared/lib/useSocketEvent';
 import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import useChatStore from '../../app/store/chatStore';
 
-export function HomePage({socket}) {
+export function HomePage({ socket }) {
+  const [isConnected, setIsConnected] = useState(socket?.connected ?? false);
   const queryClient = useQueryClient();
+
+  const currentChannelId = useChatStore((state) => state.currentChannelId);
+  const setCurrentChannelId = useChatStore((state) => state.setCurrentChannelId);
 
   const { data: channels, isLoading: channelsLoading } = useChannels();
   const { data: messages, isLoading: messagesLoading } = useMessages();
-  const { mutate: sendMessage, isPending: isSending } = useSendMessage();
 
-  
-  // Подписка на новые сообщения
   useSocketEvent(socket, 'newMessage', () => {
-    queryClient.invalidateQueries({ queryKey: ['messages'] });
+    queryClient.invalidateQueries({ queryKey: ['messages'] }).catch(console.error);
   });
 
-  // Подписка на новые каналы
   useSocketEvent(socket, 'newChannel', () => {
-    queryClient.invalidateQueries({ queryKey: ['channels'] });
+    queryClient.invalidateQueries({ queryKey: ['channels'] }).catch(console.error);
   });
 
-  // Подписка на удаление канала
   useSocketEvent(socket, 'removeChannel', () => {
-    queryClient.invalidateQueries({ queryKey: ['channels'] });
+    queryClient.invalidateQueries({ queryKey: ['channels'] }).catch(console.error);
   });
 
-  // Подписка на переименование канала
   useSocketEvent(socket, 'renameChannel', () => {
-    queryClient.invalidateQueries({ queryKey: ['channels'] });
+    queryClient.invalidateQueries({ queryKey: ['channels'] }).catch(console.error);
   });
+
+  useSocketEvent(socket, 'connect', () => setIsConnected(true));
+  useSocketEvent(socket, 'disconnect', () => setIsConnected(false));
+
+   useEffect(() => {
+    if (channels?.length && !currentChannelId) {
+      const generalChannel = channels.find((c) => c.name === 'general');
+      if (generalChannel) {
+        setCurrentChannelId(generalChannel.id);
+      } else {
+        // Если general нет — берём первый канал
+        setCurrentChannelId(channels[0].id);
+      }
+    }
+  }, [channels, currentChannelId, setCurrentChannelId]);
+
   if (channelsLoading || messagesLoading) return <Loader />;
 
   return (
-    <Flex h="100vh">
-      <Sidebar channels={channels} />
-      <ChatArea channels={channels} messages={messages}  onSendMessage={sendMessage} isSending={isSending}/>
+    <Flex h="100vh" direction="column">
+     
+      <Flex style={{ flex: 1 }}>
+        <Sidebar channels={channels} />
+        <ChatArea channels={channels} messages={messages} />
+         {!isConnected && (
+        <Badge color="red" variant="filled">
+          Попытка переподключения...
+        </Badge>
+      )}
+      </Flex>
     </Flex>
   );
 }
 
-export default HomePage
+export default HomePage;

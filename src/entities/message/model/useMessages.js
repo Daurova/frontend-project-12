@@ -17,17 +17,42 @@ export const useSendMessage = () => {
   const token = useAuthStore((state) => state.token);
   const username = useAuthStore((state) => state.user);
 
-  console.log('useSendMessage — token:', token);      // ← проверь
-  console.log('useSendMessage — username:', username); // ← проверь
-
   return useMutation({
     mutationFn: ({ body, channelId }) =>
       sendMessage(token, { body, channelId, username }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['messages'] });
+
+    onMutate: async (newMessage) => {
+      // Отменяем текущие запросы, чтобы не перезаписать оптимистичное обновление
+      await queryClient.cancelQueries({ queryKey: ['messages'] });
+
+      // Сохраняем предыдущие данные для отката
+      const previousMessages = queryClient.getQueryData(['messages']);
+
+      // Оптимистично добавляем сообщение в кеш
+      queryClient.setQueryData(['messages'], (old = []) => [
+        ...old,
+        {
+          id: `temp-${Date.now()}`,
+          body: newMessage.body,
+          channelId: newMessage.channelId,
+          username,
+          isPending: true, // флаг, что сообщение ещё не отправлено
+        },
+      ]);
+
+      return { previousMessages };
     },
-    onError: (error) => {
-      console.error('Ошибка отправки:', error); // ← проверь
+
+    onError: (err, newMessage, context) => {
+      // Откатываем оптимистичное обновление при ошибке
+      if (context?.previousMessages) {
+        queryClient.setQueryData(['messages'], context.previousMessages);
+      }
+    },
+
+    onSuccess: () => {
+      // Обновляем кеш после успешной отправки
+      queryClient.invalidateQueries({ queryKey: ['messages'] });
     },
   });
 };
