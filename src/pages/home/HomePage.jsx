@@ -48,6 +48,9 @@ export function HomePage({ socket }) {
       }
     }
   }, [channels, currentChannelId, setCurrentChannelId]);
+  console.log('HomePage — channels:', channels); // ← добавь
+  console.log('HomePage — channelsLoading:', channelsLoading); // ← добавь
+
 
   if (channelsLoading || messagesLoading) return <Loader />;
 
