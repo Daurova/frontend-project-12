@@ -3,7 +3,7 @@ import { Navigate, Link } from 'react-router-dom';
 import useAuthStore from '../../app/store/authStore';
 import LoginForm from '../../features/auth/ui/LoginForm';
 
-function LoginPage() {
+function LogInPage() {
   const token = useAuthStore((state) => state.token);
 
   if (token) {
@@ -28,4 +28,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage
+export default LogInPage

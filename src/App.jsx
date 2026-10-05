@@ -2,10 +2,10 @@ import { Routes, Route } from 'react-router-dom'
 import { ROUTES } from './app/routes'
 import './App.css'
 import HomePage from './pages/home/HomePage'
-import LogInPage from './pages/login/LoginPage'
 import NotFoundPage from './pages/notFound/NotFoundPage'
 import ProtectedRoute from './shared/ui/ProtectedRoute'
 import { SignupPage } from './pages/signUp/SignUpPage'
+import LogInPage from './pages/login/LogInPage'
 
 function App({socket}) {
 
