@@ -31,3 +31,22 @@ export const login = async (username, password) => {
   
   return data;
 };
+
+export const signup = async (username, password) => {
+  const response = await fetch('/api/v1/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username, password }),
+  });
+
+  if (!response.ok) {
+    if (response.status === 409) {
+      throw new Error('Пользователь с таким именем уже существует');
+    }
+    throw new Error('Ошибка регистрации');
+  }
+
+  return response.json();
+}
