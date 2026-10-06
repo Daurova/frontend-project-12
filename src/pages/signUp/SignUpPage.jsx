@@ -3,7 +3,7 @@ import { Navigate, Link } from 'react-router-dom';
 import useAuthStore from '../../app/store/authStore';
 import { SignupForm } from '../../features/auth/ui/SignupForm';
 
-export function SignupPage() {
+function SignUpPage() {
   const token = useAuthStore((state) => state.token);
 
   if (token) {
@@ -27,3 +27,5 @@ export function SignupPage() {
     </Container>
   );
 }
+
+export default SignUpPage

@@ -4,8 +4,8 @@ import './App.css'
 import HomePage from './pages/home/HomePage'
 import NotFoundPage from './pages/notFound/NotFoundPage'
 import ProtectedRoute from './shared/ui/ProtectedRoute'
-import { SignupPage } from './pages/signUp/SignUpPage'
 import LogInPage from './pages/login/LogInPage'
+import SignUpPage from './pages/signUp/SignUpPage'
 
 function App({socket}) {
 
@@ -14,7 +14,7 @@ function App({socket}) {
       <Routes>
         <Route path={ROUTES.HOME} element={<ProtectedRoute><HomePage socket  = {socket}/></ProtectedRoute>} />
         <Route path={ROUTES.LOGIN} element={<LogInPage />} />
-        <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
+        <Route path={ROUTES.SIGNUP} element={<SignUpPage />} />
         <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
       </Routes>
     </>
