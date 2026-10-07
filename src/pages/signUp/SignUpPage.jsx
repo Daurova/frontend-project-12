@@ -1,7 +1,7 @@
 import { Paper, Title, Text, Anchor, Container } from '@mantine/core';
 import { Navigate, Link } from 'react-router-dom';
 import useAuthStore from '../../app/store/authStore';
-import { SignupForm } from '../../features/auth/ui/SignupForm';
+import SignUpForm  from '../../features/auth/ui/SignUpForm';
 
 function SignUpPage() {
   const token = useAuthStore((state) => state.token);
@@ -16,7 +16,7 @@ function SignUpPage() {
         <Title order={2} ta="center" mb="lg">
           Регистрация
         </Title>
-        <SignupForm />
+        <SignUpForm />
         <Text c="dimmed" size="sm" ta="center" mt="md">
           Уже есть аккаунт?{' '}
           <Anchor component={Link} to="/login" size="sm">

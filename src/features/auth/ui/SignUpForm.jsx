@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { signup } from '../../../shared/auth';
 import useAuthStore from '../../../app/store/authStore';
 
-export function SignupForm() {
+function SignUpForm() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -89,3 +89,5 @@ export function SignupForm() {
     </form>
   );
 }
+
+export default SignUpForm
