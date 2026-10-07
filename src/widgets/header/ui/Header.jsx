@@ -1,8 +1,10 @@
-import { Group, Anchor, Button, Container, Text } from '@mantine/core';
+import { Group, Anchor, Button, Container } from '@mantine/core';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';   
 import useAuthStore from '../../../app/store/authStore';
 
 export function Header() {
+  const { t } = useTranslation();                 
   const navigate = useNavigate();
   const token = useAuthStore((state) => state.token);
   const logout = useAuthStore((state) => state.logout);
@@ -22,12 +24,12 @@ export function Header() {
           fw={700}
           underline="never"
         >
-          Hexlet Chat
+          {t('header.brand')}                     
         </Anchor>
 
         {token && (
           <Button variant="light" onClick={handleLogout}>
-            Выйти
+            {t('auth.logoutButton')}              
           </Button>
         )}
       </Group>

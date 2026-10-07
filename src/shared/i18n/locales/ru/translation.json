@@ -1,0 +1,57 @@
+{
+  "auth": {
+    "loginTitle": "Вход в чат",
+    "signupTitle": "Регистрация",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "confirmPassword": "Подтверждение пароля",
+    "loginButton": "Войти",
+    "signupButton": "Зарегистрироваться",
+    "logoutButton": "Выйти",
+    "noAccount": "Нет аккаунта?",
+    "hasAccount": "Уже есть аккаунт?",
+    "loginLink": "Войти",
+    "signupLink": "Зарегистрироваться"
+  },
+  "channels": {
+    "title": "Каналы",
+    "add": "Добавить",
+    "rename": "Переименовать",
+    "remove": "Удалить",
+    "removeConfirm": "Вы уверены, что хотите удалить канал",
+    "cancel": "Отмена",
+    "create": "Создать",
+    "newChannelName": "Новое имя",
+    "channelName": "Имя канала",
+    "channelPlaceholder": "Введите имя"
+  },
+  "messages": {
+    "placeholder": "Введите сообщение...",
+    "send": "Отправить",
+    "sending": "Отправка...",
+    "error": "Ошибка отправки",
+    "noConnection": "Нет подключения к интернету",
+    "timeout": "Превышено время ожидания. Проверьте соединение.",
+    "selectChannel": "Выберите канал"
+  },
+  "header": {
+    "brand": "Хекслет Чат"
+  },
+  "connection": {
+    "lost": "Соединение потеряно",
+    "reconnecting": "Попытка переподключения..."
+  },
+  "validation": {
+    "required": "Поле обязательно",
+    "usernameMin": "Минимум 3 символа",
+    "usernameMax": "Максимум 20 символов",
+    "passwordMin": "Минимум 6 символов",
+    "passwordMismatch": "Пароли не совпадают",
+    "channelNameExists": "Канал с таким именем уже существует",
+    "userExists": "Пользователь с таким именем уже существует"
+  },
+  "errors": {
+    "loginFailed": "Ошибка авторизации",
+    "signupFailed": "Ошибка регистрации"
+  }
+}
