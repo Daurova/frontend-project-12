@@ -3,6 +3,7 @@ import { Modal, TextInput, Button, Stack, Group } from '@mantine/core';
 import { useCreateChannel } from '../../../entities/channel/model/useChannels';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { notifications } from '@mantine/notifications';
 
 export function AddChannelModal({ opened, onClose, existingChannels }) {
   const {t} = useTranslation()
@@ -34,6 +35,11 @@ export function AddChannelModal({ opened, onClose, existingChannels }) {
   const handleSubmit = (values) => {
     createChannel(values.name, {
       onSuccess: () => {
+        notifications.show({
+          title: t('notifications.channelCreated'),
+          message: `# ${values.name}`,
+          color: 'green',
+          });
         form.reset();
         onClose();
       },

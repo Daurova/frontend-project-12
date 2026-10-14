@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from "./app/providers/query-client-provider";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./shared/i18n/index";
+import { Notifications } from "@mantine/notifications";
 
 const logSocket = debug("chat:socket");
 
@@ -20,7 +21,8 @@ const init = async (socket) => {
   return (
         <I18nextProvider i18n={i18n}>            
 
-      <MantineProvider>      
+      <MantineProvider>   
+        <Notifications position="top-center"/>   
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>   
             <App socket = {socket} />

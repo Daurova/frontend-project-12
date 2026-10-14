@@ -3,6 +3,8 @@ import { useRemoveChannel } from '../../../entities/channel/model/useChannels';
 import { useQueryClient } from '@tanstack/react-query';
 import useChatStore from '../../../app/store/chatStore'; 
 import { useTranslation } from 'react-i18next'; 
+import { notifications } from '@mantine/notifications';
+
 
 export function RemoveChannelModal({ opened, onClose, channel }) {
   const {t}= useTranslation()
@@ -13,6 +15,11 @@ export function RemoveChannelModal({ opened, onClose, channel }) {
   const handleRemove = () => {
     removeChannel(channel.id, {
       onSuccess: () => {
+        notifications.show({
+          title: t('notifications.channelRemoved'),
+          message: `# ${channel.name}`,
+          color: 'green',
+        });
         const channels = queryClient.getQueryData(['channels']);
         const generalChannel = channels?.find((c) => c.name === 'general');
         

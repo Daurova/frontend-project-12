@@ -55,5 +55,12 @@
     "signupFailed": "Ошибка регистрации",
     "userExists": "Пользователь с таким именем уже существует"
 
+  }, 
+  "notifications": {
+    "channelCreated": "Канал создан",
+    "channelRenamed": "Канал переименован",
+    "channelRemoved": "Канал удалён",
+    "dataLoadError": "Ошибка загрузки данных",
+    "noConnection": "Нет подключения к интернету"
   }
 }

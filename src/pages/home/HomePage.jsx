@@ -8,6 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import useChatStore from '../../app/store/chatStore';
 import { useTranslation } from 'react-i18next';
+import { notifications } from '@mantine/notifications';
 
 export function HomePage({ socket }) {
   const {t} = useTranslation()
@@ -17,8 +18,8 @@ export function HomePage({ socket }) {
   const currentChannelId = useChatStore((state) => state.currentChannelId);
   const setCurrentChannelId = useChatStore((state) => state.setCurrentChannelId);
 
-  const { data: channels, isLoading: channelsLoading } = useChannels();
-  const { data: messages, isLoading: messagesLoading } = useMessages();
+  const { data: channels, isLoading: channelsLoading, error: channelsError } = useChannels();
+  const { data: messages, isLoading: messagesLoading, error: messagesError } = useMessages();
 
   useSocketEvent(socket, 'newMessage', () => {
     queryClient.invalidateQueries({ queryKey: ['messages'] }).catch(console.error);
@@ -38,6 +39,31 @@ export function HomePage({ socket }) {
 
   useSocketEvent(socket, 'connect', () => setIsConnected(true));
   useSocketEvent(socket, 'disconnect', () => setIsConnected(false));
+
+  useEffect(() => {
+    if (channelsError || messagesError) {
+      notifications.show({
+        title: t('notifications.dataLoadError'),
+        message: (channelsError || messagesError)?.message || '',
+        color: 'red',
+      });
+    }
+  }, [channelsError, messagesError, t]);
+
+  // Уведомление об отсутствии сети
+  useEffect(() => {
+    const handleOffline = () => {
+      notifications.show({
+        title: t('notifications.noConnection'),
+        message: '',
+        color: 'red',
+      });
+    };
+
+    window.addEventListener('offline', handleOffline);
+    return () => window.removeEventListener('offline', handleOffline);
+  }, [t]);
+
 
    useEffect(() => {
     if (channels?.length && !currentChannelId) {

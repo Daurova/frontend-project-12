@@ -3,6 +3,8 @@ import { Modal, TextInput, Button, Stack, Group } from '@mantine/core';
 import { useRenameChannel } from '../../../entities/channel/model/useChannels';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { notifications } from '@mantine/notifications';
+
 
 export function RenameChannelModal({ opened, onClose, channel, existingChannels }) {
   const {t} = useTranslation()
@@ -39,6 +41,11 @@ export function RenameChannelModal({ opened, onClose, channel, existingChannels 
       { id: channel.id, name: values.name },
       {
         onSuccess: () => {
+          notifications.show({
+            title: t('notifications.channelRenamed'),
+            message: `# ${values.name}`,
+            color: 'green',
+          });
           onClose();
         },
       }
