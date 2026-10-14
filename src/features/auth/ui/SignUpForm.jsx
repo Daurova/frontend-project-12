@@ -2,10 +2,12 @@ import { useForm } from '@mantine/form';
 import { TextInput, PasswordInput, Button, Stack, Alert } from '@mantine/core';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { signup } from '../../../shared/auth';
 import useAuthStore from '../../../app/store/authStore';
 
 function SignUpForm() {
+  const { t } = useTranslation(); 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -19,19 +21,19 @@ function SignUpForm() {
     },
     validate: {
       username: (value) => {
-        if (!value) return 'Имя пользователя обязательно';
-        if (value.length < 3) return 'Минимум 3 символа';
-        if (value.length > 20) return 'Максимум 20 символов';
+        if (!value) return t('validation.required');
+        if (value.length < 3) return t('validation.usernameMin');
+        if (value.length > 20) return t('validation.usernameMax');
         return null;
       },
       password: (value) => {
-        if (!value) return 'Пароль обязателен';
-        if (value.length < 6) return 'Минимум 6 символов';
+        if (!value) return t('validation.required');
+        if (value.length < 6) return t('validation.passwordMin');
         return null;
       },
       confirmPassword: (value, values) => {
-        if (!value) return 'Подтверждение пароля обязательно';
-        if (value !== values.password) return 'Пароли не совпадают';
+        if (!value) return t('validation.required');
+        if (value !== values.password) return t('validation.passwordMismatch');
         return null;
       },
     },
@@ -46,7 +48,7 @@ function SignUpForm() {
       authLogin(data.token, data.username);
       navigate('/');
     } catch (err) {
-      setError(err.message || 'Ошибка регистрации');
+      setError(t(`errors.${err.message}`));
     } finally {
       setLoading(false);
     }
@@ -56,38 +58,39 @@ function SignUpForm() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         {error && (
-          <Alert color="red" title="Ошибка регистрации">
+          <Alert color="red" title={t('errors.signupFailed')}>
             {error}
           </Alert>
         )}
 
         <TextInput
-          label="Имя пользователя"
-          placeholder="Введите имя"
+          label={t('auth.username')}
+          placeholder={t('auth.username')}
           disabled={loading}
           {...form.getInputProps('username')}
         />
 
         <PasswordInput
-          label="Пароль"
-          placeholder="Введите пароль"
+          label={t('auth.password')}
+          placeholder={t('auth.password')}
           disabled={loading}
           {...form.getInputProps('password')}
         />
 
         <PasswordInput
-          label="Подтверждение пароля"
-          placeholder="Повторите пароль"
+          label={t('auth.confirmPassword')}
+          placeholder={t('auth.confirmPassword')}
           disabled={loading}
           {...form.getInputProps('confirmPassword')}
         />
 
         <Button type="submit" fullWidth mt="md" loading={loading}>
-          Зарегистрироваться
+          {t('auth.signupButton')}
         </Button>
       </Stack>
     </form>
   );
 }
+
 
 export default SignUpForm

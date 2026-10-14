@@ -1,13 +1,15 @@
-import { Paper, Text, Button, Stack, ScrollArea } from '@mantine/core';
+import { Paper, Text, Button, Stack} from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { AddChannelModal } from '../../channel/ui/AddChannelModal';
 import { RenameChannelModal } from '../../channel/ui/RenameChannelModal';
 import { RemoveChannelModal } from '../../channel/ui/RemoveChannelModal';
 import useChatStore from '../../../app/store/chatStore';
 import { ChannelList } from './ChannelList';
+import { useTranslation } from 'react-i18next';
 
 export function Sidebar({ channels }) {
-    console.log('Sidebar рендерится, channels:', channels); // ← добавь
+  const { t } = useTranslation();
+  console.log('Sidebar рендерится, channels:', channels); // ← добавь
 
   const isAddModalOpen = useChatStore((state) => state.isAddModalOpen);
   const openAddModal = useChatStore((state) => state.openAddModal);
@@ -24,14 +26,14 @@ export function Sidebar({ channels }) {
   return (
     <Paper withBorder p="sm" style={{ width: 250, height: '100%' }}>
       <Stack gap="xs" h="100%">
-        <Text fw={700}>Каналы</Text>
+        <Text fw={700}>{t('channels.title')}</Text>
         <Button
           leftSection={<IconPlus size={16} />}
           variant="light"
           fullWidth
           onClick={openAddModal}
         >
-          Добавить
+          {t('channels.add')}
         </Button>
           <ChannelList channels={channels} />
       </Stack>

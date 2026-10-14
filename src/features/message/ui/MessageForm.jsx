@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Alert, TextInput, Button, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useTranslation } from 'react-i18next';  
 import { useSendMessage } from '../../../entities/message/model/useMessages';
 
 export function MessageForm({ channelId }) {
+  const { t } = useTranslation();                
   const [sendError, setSendError] = useState(null);
   const { mutate: sendMessage, isPending } = useSendMessage();
 
@@ -26,22 +28,22 @@ export function MessageForm({ channelId }) {
   };
 
   return (
-    <>
+        <>
       {sendError && (
-        <Alert color="red" title="Ошибка отправки">
+        <Alert color="red" title={t('messages.error')}>   
           {sendError}
         </Alert>
       )}
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Group mt="md" align="flex-end">
           <TextInput
-            placeholder="Введите сообщение..."
+            placeholder={t('messages.placeholder')}       
             style={{ flex: 1 }}
             disabled={isPending}
             {...form.getInputProps('body')}
           />
           <Button type="submit" loading={isPending}>
-            Отправить
+            {t('messages.send')}                          
           </Button>
         </Group>
       </form>

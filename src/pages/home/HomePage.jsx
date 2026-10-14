@@ -7,8 +7,10 @@ import { useSocketEvent } from '../../shared/lib/useSocketEvent';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import useChatStore from '../../app/store/chatStore';
+import { useTranslation } from 'react-i18next';
 
 export function HomePage({ socket }) {
+  const {t} = useTranslation()
   const [isConnected, setIsConnected] = useState(socket?.connected ?? false);
   const queryClient = useQueryClient();
 
@@ -62,7 +64,7 @@ export function HomePage({ socket }) {
         <ChatArea channels={channels} messages={messages} />
          {!isConnected && (
         <Badge color="red" variant="filled">
-          Попытка переподключения...
+          {t('connection.reconnecting')}
         </Badge>
       )}
       </Flex>

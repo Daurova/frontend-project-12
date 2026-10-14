@@ -2,8 +2,10 @@ import { useForm } from '@mantine/form';
 import { Modal, TextInput, Button, Stack, Group } from '@mantine/core';
 import { useCreateChannel } from '../../../entities/channel/model/useChannels';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export function AddChannelModal({ opened, onClose, existingChannels }) {
+  const {t} = useTranslation()
   const { mutate: createChannel, isPending } = useCreateChannel();
   const inputRef = useRef(null);
 
@@ -11,11 +13,11 @@ export function AddChannelModal({ opened, onClose, existingChannels }) {
     initialValues: { name: '' },
     validate: {
       name: (value) => {
-        if (!value) return 'Имя канала обязательно';
-        if (value.length < 3) return 'Минимум 3 символа';
-        if (value.length > 20) return 'Максимум 20 символов';
+        if (!value) return t('validation.required');
+        if (value.length < 3) return t('validation.usernameMin');
+        if (value.length > 20) return t('validation.usernameMax');
         if (existingChannels?.some((c) => c.name === value)) {
-          return 'Канал с таким именем уже существует';
+          return t('validation.channelNameExists');
         }
         return null;
       },
@@ -39,22 +41,22 @@ export function AddChannelModal({ opened, onClose, existingChannels }) {
   };
 
   return (
-    <Modal opened={opened} onClose={onClose} title="Добавить канал">
+    <Modal opened={opened} onClose={onClose} title={t('channels.add')}>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack>
           <TextInput
             ref={inputRef}
-            label="Имя канала"
-            placeholder="Введите имя"
+            label={t('channels.channelName')}
+            placeholder={t('channels.channelPlaceholder')}
             disabled={isPending}
             {...form.getInputProps('name')}
           />
           <Group justify="flex-end">
             <Button variant="default" onClick={onClose} disabled={isPending}>
-              Отмена
+              {t('channels.cancel')}
             </Button>
             <Button type="submit" loading={isPending}>
-              Создать
+              {t('channels.create')}
             </Button>
           </Group>
         </Stack>

@@ -1,12 +1,14 @@
 import { Modal, Button, Text, Group } from '@mantine/core';
 import { useRemoveChannel } from '../../../entities/channel/model/useChannels';
 import { useQueryClient } from '@tanstack/react-query';
-import useChatStore from '../../../app/store/chatStore'; // ← добавь
+import useChatStore from '../../../app/store/chatStore'; 
+import { useTranslation } from 'react-i18next'; 
 
 export function RemoveChannelModal({ opened, onClose, channel }) {
+  const {t}= useTranslation()
   const { mutate: removeChannel, isPending } = useRemoveChannel();
   const queryClient = useQueryClient();
-  const setCurrentChannelId = useChatStore((state) => state.setCurrentChannelId); // ← добавь
+  const setCurrentChannelId = useChatStore((state) => state.setCurrentChannelId); 
 
   const handleRemove = () => {
     removeChannel(channel.id, {
@@ -24,17 +26,16 @@ export function RemoveChannelModal({ opened, onClose, channel }) {
   };
 
   return (
-    <Modal opened={opened} onClose={onClose} title="Удалить канал">
+    <Modal opened={opened} onClose={onClose} title={t('channels.remove')}>
       <Text mb="lg">
-        Вы уверены, что хотите удалить канал <strong>#{channel?.name}</strong>?
-        Все сообщения будут удалены.
+        {t('channels.removeConfirm')} <strong>#{channel?.name}</strong>?
       </Text>
       <Group justify="flex-end">
         <Button variant="default" onClick={onClose} disabled={isPending}>
-          Отмена
+          {t('channels.cancel')}
         </Button>
         <Button color="red" onClick={handleRemove} loading={isPending}>
-          Удалить
+          {t('channels.remove')}
         </Button>
       </Group>
     </Modal>
