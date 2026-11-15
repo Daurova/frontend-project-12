@@ -4,6 +4,9 @@ import { useCreateChannel } from '../../../entities/channel/model/useChannels';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { notifications } from '@mantine/notifications';
+import filter from 'leo-profanity';
+
+filter.loadDictionary('ru');
 
 export function AddChannelModal({ opened, onClose, existingChannels }) {
   const {t} = useTranslation()
@@ -17,6 +20,7 @@ export function AddChannelModal({ opened, onClose, existingChannels }) {
         if (!value) return t('validation.required');
         if (value.length < 3) return t('validation.usernameMin');
         if (value.length > 20) return t('validation.usernameMax');
+        if (filter.check(value)) return t('validation.channelNameProfanity');
         if (existingChannels?.some((c) => c.name === value)) {
           return t('validation.channelNameExists');
         }

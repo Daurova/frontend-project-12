@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { Alert, TextInput, Button, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useTranslation } from 'react-i18next';  
+import filter from 'leo-profanity';
 import { useSendMessage } from '../../../entities/message/model/useMessages';
+
+filter.loadDictionary('ru');
 
 export function MessageForm({ channelId }) {
   const { t } = useTranslation();                
@@ -16,8 +19,10 @@ export function MessageForm({ channelId }) {
   const handleSubmit = (values) => {
     if (!values.body.trim()) return;
 
+    const cleanBody = filter.clean(values.body);
+
     sendMessage(
-      { body: values.body, channelId },
+      { body: cleanBody, channelId },
       {
         onError: (error) => setSendError(error.message),
         onSuccess: () => setSendError(null),
