@@ -3,3 +3,6 @@ build:
 
 start:
 	npx start-server -s ./dist
+
+install: 
+	npm install
