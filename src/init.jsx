@@ -1,5 +1,6 @@
 import debug from "debug";
 import App from "./App";
+
 import { BrowserRouter } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -8,6 +9,8 @@ import { queryClient } from "./app/providers/query-client-provider";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./shared/i18n/index";
 import { Notifications } from "@mantine/notifications";
+import * as Sentry from "@sentry/react";
+
 
 const logSocket = debug("chat:socket");
 
@@ -25,7 +28,9 @@ const init = async (socket) => {
         <Notifications position="top-center"/>   
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>   
+            <Sentry.ErrorBoundary fallback={<p>Что-то пошло не так</p>}>
             <App socket = {socket} />
+            </Sentry.ErrorBoundary>
           </BrowserRouter>  
         <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

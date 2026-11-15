@@ -1,3 +1,4 @@
+import './instrument';
 import { createRoot } from 'react-dom/client'
 import init from './init.jsx'
 import { io } from 'socket.io-client';
