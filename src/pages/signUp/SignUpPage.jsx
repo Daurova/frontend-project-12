@@ -1,14 +1,14 @@
 import { Paper, Title, Text, Anchor, Container } from '@mantine/core';
-import { Navigate, Link } from 'react-router-dom';
-import useAuthStore from '../../app/store/authStore';
+// import { Navigate, Link } from 'react-router-dom';
+// import useAuthStore from '../../app/store/authStore';
 import SignUpForm  from '../../features/auth/ui/SignUpForm';
 
 function SignUpPage() {
-  const token = useAuthStore((state) => state.token);
+  // const token = useAuthStore((state) => state.token);
 
-  if (token) {
-    return <Navigate to="/" replace />;
-  }
+  // if (token) {
+  //   return <Navigate to="/" replace />;
+  // }
 
   return (
     <Container size={420} my={40}>
@@ -19,9 +19,9 @@ function SignUpPage() {
         <SignUpForm />
         <Text c="dimmed" size="sm" ta="center" mt="md">
           Уже есть аккаунт?{' '}
-          <Anchor component={Link} to="/login" size="sm">
+          {/* <Anchor component={Link} to="/login" size="sm">
             Войти
-          </Anchor>
+          </Anchor> */}
         </Text>
       </Paper>
     </Container>
