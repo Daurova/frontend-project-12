@@ -5,7 +5,7 @@ import { Sidebar } from '../../features/chat/ui/Sidebar';
 import { ChatArea } from '../../features/chat/ui/ChatArea';
 import { useSocketEvent } from '../../shared/lib/useSocketEvent';
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react'; // <-- убрали useRef
+import { useEffect, useState } from 'react'; 
 import useChatStore from '../../app/store/chatStore';
 import { useTranslation } from 'react-i18next';
 import { notifications } from '@mantine/notifications';
@@ -64,18 +64,20 @@ export function HomePage({ socket }) {
     return () => window.removeEventListener('offline', handleOffline);
   }, [t]);
 
+  // Формируем строку ID каналов (до useEffect)
+  const channelsIds = channels?.map((c) => c.id).join(',') || '';
+
   useEffect(() => {
-    // Если есть каналы и нет текущего канала
-    if (channels?.length && !currentChannelId) {
+    if (channelsIds && !currentChannelId) {
       const generalChannel = channels.find((c) => c.name === 'general');
       const idToSet = generalChannel ? generalChannel.id : channels[0].id;
       
-      // Устанавливаем только если это реально другое значение
       if (idToSet !== currentChannelId) {
          setCurrentChannelId(idToSet);
       }
     }
-  }, [channels, currentChannelId, setCurrentChannelId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [channelsIds, currentChannelId, setCurrentChannelId]);
 
   if (channelsLoading || messagesLoading) return <Loader />;
 
