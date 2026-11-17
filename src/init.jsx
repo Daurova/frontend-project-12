@@ -2,13 +2,13 @@ import debug from "debug";
 import App from "./App";
 
 import { BrowserRouter } from "react-router-dom";
-import { MantineProvider } from "@mantine/core";
+// import { MantineProvider } from "@mantine/core";
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from "./app/providers/query-client-provider";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./shared/i18n/index";
-import { Notifications } from "@mantine/notifications";
+// import { Notifications } from "@mantine/notifications";
 // import * as Sentry from "@sentry/react";
 
 
@@ -23,9 +23,9 @@ const init = async (socket) => {
 
   return (
         <I18nextProvider i18n={i18n}>            
-
+{/* 
       <MantineProvider>   
-        <Notifications position="top-center"/>   
+        <Notifications position="top-center"/>    */}
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>   
             {/* <Sentry.ErrorBoundary fallback={<p>Что-то пошло не так</p>}> */}
@@ -34,7 +34,7 @@ const init = async (socket) => {
           </BrowserRouter>  
         <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
-      </MantineProvider>
+      {/* </MantineProvider> */}
       </I18nextProvider>
   );
 };
