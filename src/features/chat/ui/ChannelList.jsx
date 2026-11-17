@@ -10,7 +10,6 @@ export function ChannelList({ channels }) {
   return (
     <Stack gap="xs">
       {channels?.map((channel) => {
-        console.log('channel:', channel.name, 'removable:', channel.removable); // ← добавь
         return (
           <NavLink
             key={channel.id}

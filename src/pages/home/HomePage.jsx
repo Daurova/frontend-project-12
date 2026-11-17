@@ -5,7 +5,7 @@ import { Sidebar } from '../../features/chat/ui/Sidebar';
 import { ChatArea } from '../../features/chat/ui/ChatArea';
 import { useSocketEvent } from '../../shared/lib/useSocketEvent';
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState, useRef } from 'react'; // <-- добавили useRef
+import { useEffect, useState } from 'react'; // <-- убрали useRef
 import useChatStore from '../../app/store/chatStore';
 import { useTranslation } from 'react-i18next';
 import { notifications } from '@mantine/notifications';
@@ -17,9 +17,6 @@ export function HomePage({ socket }) {
 
   const currentChannelId = useChatStore((state) => state.currentChannelId);
   const setCurrentChannelId = useChatStore((state) => state.setCurrentChannelId);
-
-  // Флаг, чтобы выбрать канал только один раз при старте
-  const hasSetInitialChannel = useRef(false);
 
   const { data: channels, isLoading: channelsLoading, error: channelsError } = useChannels();
   const { data: messages, isLoading: messagesLoading, error: messagesError } = useMessages();
@@ -68,16 +65,14 @@ export function HomePage({ socket }) {
   }, [t]);
 
   useEffect(() => {
-    // Добавили проверку hasSetInitialChannel.current, чтобы не было цикла
-    if (channels?.length && !currentChannelId && !hasSetInitialChannel.current) {
-      hasSetInitialChannel.current = true; // Ставим флаг, что выбор сделан
-      
+    // Если есть каналы и нет текущего канала
+    if (channels?.length && !currentChannelId) {
       const generalChannel = channels.find((c) => c.name === 'general');
-      if (generalChannel) {
-        setCurrentChannelId(generalChannel.id);
-      } else {
-        // Если general нет — берём первый канал
-        setCurrentChannelId(channels[0].id);
+      const idToSet = generalChannel ? generalChannel.id : channels[0].id;
+      
+      // Устанавливаем только если это реально другое значение
+      if (idToSet !== currentChannelId) {
+         setCurrentChannelId(idToSet);
       }
     }
   }, [channels, currentChannelId, setCurrentChannelId]);
