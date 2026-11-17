@@ -6,15 +6,18 @@ import NotFoundPage from './pages/notFound/NotFoundPage'
 import ProtectedRoute from './shared/ui/ProtectedRoute'
 import SignUpPage from './pages/signUp/SignUpPage'
 import LogInPage from './pages/login/LogInPage'
-// import { Header } from './widgets/header/ui/Header'
+import { Header } from './widgets/header/ui/Header'
 
 function App({socket}) {
 
   return (
     <>
-      {/* <Header/> */}
+      <Header/>
       <Routes>
-        <Route path={ROUTES.HOME} element={<ProtectedRoute><HomePage socket  = {socket}/></ProtectedRoute>} />
+        <Route path={ROUTES.HOME} element={
+          <ProtectedRoute>
+          <HomePage socket  = {socket}/>
+          </ProtectedRoute>} />
         <Route path={ROUTES.LOGIN} element={<LogInPage/>} />
         <Route path={ROUTES.SIGNUP} element={<SignUpPage />} />
         <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
