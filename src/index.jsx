@@ -7,37 +7,38 @@ import init from './init.jsx';
 import { io } from 'socket.io-client';
 import '@mantine/core/styles.css';
 
-// --- НАЧАЛО ПРЕДОХРАНИТЕЛЯ ---
+// --- НАЧАЛО ПРЕДОХРАНИТЕЛЯ (ИСПРАВЛЕННЫЙ ВАРИАНТ) ---
 let renderCount = 0;
-const MAX_RENDERS = 10; // Лимит, после которого мы "взрываемся"
+const MAX_RENDERS = 100;
 
-const originalConsoleError = console.error;
+// Сохраняем ссылку на оригинальный useEffect
+const originalUseEffect = React.useEffect;
 
-// Перехватываем useEffect, чтобы считать циклы
-React.useEffect = (...args) => {
+// Перехватываем
+React.useEffect = function (...args) {
   const effectFn = args[0];
-  
-  args[0] = () => {
+  const deps = args[1];
+
+  // Создаем обертку
+  const wrappedEffect = () => {
     renderCount++;
-    
-    // Если лимит превышен — принудительно падаем
+
     if (renderCount > MAX_RENDERS) {
-      // Создаем ошибку со стеком
-      const bomb = new Error(`💥 RENDER BOMB: Component rendered ${renderCount} times. Stack trace:`);
+      const bomb = new Error(
+        `💥 RENDER BOMB: Component rendered ${renderCount} times. Check the stack below.`
+      );
+      console.error(bomb);
       
-      // Печатаем в консоль Actions, чтобы увидеть стек
-      originalConsole.error(bomb);
-      
-      // Принудительно останавливаем JS, чтобы тест упал
-      // @ts-ignore
-      window.stop?.();
-      
-      // Выбрасываем ошибку, чтобы Jest/Vitest зафиксировал падение
+      // Останавливаем тест
       throw bomb;
     }
+
+    // Вызываем ваш оригинальный эффект
+    return effectFn();
   };
 
-  return React.useEffect.apply(React, args);
+  // ВАЖНО: Вызываем оригинальный useEffect через call, передавая this и аргументы
+  return originalUseEffect.call(this, wrappedEffect, deps);
 };
 // --- КОНЕЦ ПРЕДОХРАНИТЕЛЯ ---
 
