@@ -5,41 +5,44 @@ import { Sidebar } from '../../features/chat/ui/Sidebar';
 import { ChatArea } from '../../features/chat/ui/ChatArea';
 import { useSocketEvent } from '../../shared/lib/useSocketEvent';
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState, useMemo } from 'react'; 
+import { useEffect, useState } from 'react';
 import useChatStore from '../../app/store/chatStore';
 import { useTranslation } from 'react-i18next';
 import { notifications } from '@mantine/notifications';
 
 export function HomePage({ socket }) {
   const { t } = useTranslation();
-  const [isConnected, setIsConnected] = useState(socket?.connected ?? false);
   const queryClient = useQueryClient();
 
-  // Берем ID из стора (он нужен для кликов в Sidebar)
-  const storeChannelId = useChatStore((state) => state.currentChannelId);
+  // 1. Сначала объявляем useState
+  const [isConnected, setIsConnected] = useState(socket?.connected ?? false);
 
+  // 2. Теперь используем setIsConnected в сокетах (ошибка порядка исчезнет)
+  useSocketEvent(socket, 'connect', () => setIsConnected(true));
+  useSocketEvent(socket, 'disconnect', () => setIsConnected(false));
+
+  // Читаем из стора только то, что нужно для рендера
+  const currentChannelId = useChatStore((state) => state.currentChannelId);
+  // Удаляем setCurrentChannelId, так как HomePage его не использует
+  
   const { data: channels, isLoading: channelsLoading, error: channelsError } = useChannels();
   const { data: messages, isLoading: messagesLoading, error: messagesError } = useMessages();
 
+  // Обновление кэша по сокетам
   useSocketEvent(socket, 'newMessage', () => {
     queryClient.invalidateQueries({ queryKey: ['messages'] }).catch(console.error);
   });
-
   useSocketEvent(socket, 'newChannel', () => {
     queryClient.invalidateQueries({ queryKey: ['channels'] }).catch(console.error);
   });
-
   useSocketEvent(socket, 'removeChannel', () => {
     queryClient.invalidateQueries({ queryKey: ['channels'] }).catch(console.error);
   });
-
   useSocketEvent(socket, 'renameChannel', () => {
     queryClient.invalidateQueries({ queryKey: ['channels'] }).catch(console.error);
   });
 
-  useSocketEvent(socket, 'connect', () => setIsConnected(true));
-  useSocketEvent(socket, 'disconnect', () => setIsConnected(false));
-
+  // Уведомления об ошибках
   useEffect(() => {
     if (channelsError || messagesError) {
       notifications.show({
@@ -62,25 +65,14 @@ export function HomePage({ socket }) {
     return () => window.removeEventListener('offline', handleOffline);
   }, [t]);
 
-  // ВЫЧИСЛЯЕМ АКТИВНЫЙ КАНАЛ БЕЗ useEffect
-  const activeChannelId = useMemo(() => {
-    // Если в сторе уже есть ID (пользователь кликнул), используем его
-    if (storeChannelId) return storeChannelId;
-    
-    // Если каналы еще грузятся, ничего не выбираем
-    if (!channels?.length) return null;
-
-    // Ищем general, если нет — берем первый
-    const general = channels.find((c) => c.name === 'general');
-    return general ? general.id : channels[0].id;
-  }, [storeChannelId, channels]);
+  // Логика выбора канала (берем из стора)
+  const activeChannelId = currentChannelId;
 
   if (channelsLoading || messagesLoading) return <Loader />;
 
   return (
     <Flex h="100vh" direction="column">
       <Flex style={{ flex: 1 }}>
-        {/* Передаем activeChannelId в Sidebar и ChatArea */}
         <Sidebar channels={channels} activeChannelId={activeChannelId} />
         <ChatArea channels={channels} messages={messages} activeChannelId={activeChannelId} />
         {!isConnected && (
