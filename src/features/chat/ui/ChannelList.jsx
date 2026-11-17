@@ -3,7 +3,6 @@ import useChatStore from '../../../app/store/chatStore';
 import { ChannelMenu } from './ChannelMenu';
 
 export function ChannelList({ channels }) {
-      console.log('channels:', channels); // ← добавь
 
   const currentChannelId = useChatStore((state) => state.currentChannelId);
   const setCurrentChannelId = useChatStore((state) => state.setCurrentChannelId);

@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 
 export function Sidebar({ channels }) {
   const { t } = useTranslation();
-  console.log('Sidebar рендерится, channels:', channels); // ← добавь
 
   const isAddModalOpen = useChatStore((state) => state.isAddModalOpen);
   const openAddModal = useChatStore((state) => state.openAddModal);
