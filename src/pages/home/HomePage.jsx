@@ -64,8 +64,7 @@ export function HomePage({ socket }) {
     return () => window.removeEventListener('offline', handleOffline);
   }, [t]);
 
-
-   useEffect(() => {
+  useEffect(() => {
     if (channels?.length && !currentChannelId) {
       const generalChannel = channels.find((c) => c.name === 'general');
       if (generalChannel) {
@@ -75,16 +74,13 @@ export function HomePage({ socket }) {
         setCurrentChannelId(channels[0].id);
       }
     }
-  }, [channels, currentChannelId, setCurrentChannelId]);
-  console.log('HomePage — channels:', channels); // ← добавь
-  console.log('HomePage — channelsLoading:', channelsLoading); // ← добавь
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [channels?.length, currentChannelId, setCurrentChannelId]); 
 
   if (channelsLoading || messagesLoading) return <Loader />;
 
   return (
     <Flex h="100vh" direction="column">
-     
       <Flex style={{ flex: 1 }}>
         <Sidebar channels={channels} />
         <ChatArea channels={channels} messages={messages} />
