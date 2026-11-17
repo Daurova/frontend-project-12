@@ -51,8 +51,8 @@ export const useSendMessage = () => {
     },
 
     onSuccess: () => {
-      // Обновляем кеш после успешной отправки
-      queryClient.invalidateQueries({ queryKey: ['messages'] });
+      // // Обновляем кеш после успешной отправки
+      // queryClient.invalidateQueries({ queryKey: ['messages'] });
     },
   });
 };
