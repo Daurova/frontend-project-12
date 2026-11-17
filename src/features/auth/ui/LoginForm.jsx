@@ -41,7 +41,7 @@ function LoginForm() {
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack>
           <TextInput
-            label={t('auth.username')}                
+            label={t('auth.userNickname')}                
             placeholder={t('auth.username')}          
             {...form.getInputProps('username')}
           />

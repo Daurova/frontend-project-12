@@ -1,10 +1,11 @@
 {
   "auth": {
-    "loginTitle": "Вход в чат",
+    "loginTitle": "Войти",
     "signupTitle": "Регистрация",
     "username": "Имя пользователя",
+    "userNickname": "Ваш ник",
     "password": "Пароль",
-    "confirmPassword": "Подтверждение пароля",
+    "confirmPassword": "Подтвердите пароль",
     "loginButton": "Войти",
     "signupButton": "Зарегистрироваться",
     "logoutButton": "Выйти",
@@ -16,12 +17,13 @@
   "channels": {
     "title": "Каналы",
     "add": "Добавить",
-    "rename": "Переименовать",
-    "remove": "Удалить",
-    "removeConfirm": "Вы уверены, что хотите удалить канал",
-    "cancel": "Отмена",
+    "rename": "Переименовать канал",
+    "send": "Отправить",
+    "remove": "Удалить канал",
+    "removeConfirm": "Уверены?",
+    "cancel": "Отменить",
     "create": "Создать",
-    "newChannelName": "Новое имя",
+    "newChannelName": "Имя канала",
     "channelName": "Имя канала",
     "channelPlaceholder": "Введите имя"
   },
@@ -43,16 +45,16 @@
   },
   "validation": {
     "required": "Поле обязательно",
-    "usernameMin": "Минимум 3 символа",
-    "usernameMax": "Максимум 20 символов",
-    "passwordMin": "Минимум 6 символов",
-    "passwordMismatch": "Пароли не совпадают",
+    "usernameMin": "От 3 до 20 символов",
+    "usernameMax": "От 3 до 20 символов",
+    "passwordMin": "Не менее 6 символов",
+    "passwordMismatch": "Пароли должны совпадать",
     "channelNameExists": "Канал с таким именем уже существует",
     "channelNameProfanity": "Название канала содержит недопустимые слова",
     "userExists": "Пользователь с таким именем уже существует"
   },
   "errors": {
-    "loginFailed": "Ошибка авторизации",
+    "loginFailed": "Неверные имя пользователя или пароль",
     "signupFailed": "Ошибка регистрации",
     "userExists": "Пользователь с таким именем уже существует"
 

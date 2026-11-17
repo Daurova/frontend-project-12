@@ -68,7 +68,7 @@ export function RenameChannelModal({ opened, onClose, channel, existingChannels 
               {t('channels.cancel')}
             </Button>
             <Button type="submit" loading={isPending}>
-              {t('channels.rename')}
+              {t('channels.send')}
             </Button>
           </Group>
         </Stack>
