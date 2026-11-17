@@ -1,19 +1,17 @@
 import { Paper, Title, Text } from '@mantine/core';
-import useChatStore from '../../../app/store/chatStore';
 import { MessageList } from '../../../entities/message/ui/MessageList';
 import { MessageForm } from '../../message/ui/MessageForm';
 import { useTranslation } from 'react-i18next';
 
-export function ChatArea({ channels, messages }) {
+export function ChatArea({ channels, messages, activeChannelId }) { // <-- добавили пропс
   const { t } = useTranslation(); 
-  const currentChannelId = useChatStore((state) => state.currentChannelId);
-  const currentChannel = channels?.find((c) => c.id === currentChannelId);
-  const channelMessages = messages?.filter((m) => m.channelId === currentChannelId);
+  const currentChannel = channels?.find((c) => c.id === activeChannelId);
+  const channelMessages = messages?.filter((m) => m.channelId === activeChannelId);
 
   if (!currentChannel) {
     return (
       <Paper withBorder p="md" style={{ flex: 1 }}>
-        <Text c="dimmed">В{t('messages.selectChannel')}</Text>
+        <Text c="dimmed">{t('messages.selectChannel')}</Text>
       </Paper>
     );
   }
@@ -22,7 +20,7 @@ export function ChatArea({ channels, messages }) {
     <Paper withBorder p="md" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
       <Title order={3} mb="md">#{currentChannel.name}</Title>
       <MessageList messages={channelMessages} />
-      <MessageForm channelId={currentChannelId} />
+      <MessageForm channelId={activeChannelId} />
     </Paper>
   );
 }

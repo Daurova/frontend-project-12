@@ -26,14 +26,14 @@ const init = async (socket) => {
 
       <MantineProvider>   
         {/* <Notifications position="top-center"/>    */}
-        {/* <QueryClientProvider client={queryClient}> */}
+        <QueryClientProvider client={queryClient}>
           <BrowserRouter>   
             {/* <Sentry.ErrorBoundary fallback={<p>Что-то пошло не так</p>}> */}
             <App socket = {socket} />
             {/* </Sentry.ErrorBoundary> */}
           </BrowserRouter>  
-        {/* <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider> */}
+        <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
       </MantineProvider>
       </I18nextProvider>
   );

@@ -1,28 +1,21 @@
-import { NavLink, Stack } from '@mantine/core';
+import { NavLink, Stack, ScrollArea } from '@mantine/core';
 import useChatStore from '../../../app/store/chatStore';
-import { ChannelMenu } from './ChannelMenu';
 
-export function ChannelList({ channels }) {
-
-  const currentChannelId = useChatStore((state) => state.currentChannelId);
+export function ChannelList({ channels, activeChannelId }) { // <-- добавили пропс
   const setCurrentChannelId = useChatStore((state) => state.setCurrentChannelId);
 
   return (
-    <Stack gap="xs">
-      {channels?.map((channel) => {
-        return (
+    <ScrollArea h="100%">
+      <Stack gap="xs">
+        {channels?.map((channel) => (
           <NavLink
             key={channel.id}
-            label={`# ${channel.name}`}
-            active={channel.id === currentChannelId}
-            onClick={() => setCurrentChannelId(channel.id)}
-            rightSection={
-              channel.removable && <ChannelMenu channel={channel} />
-            }
+            label={channel.name}
+            active={channel.id === activeChannelId} // <-- используем пропс
+            onClick={() => setCurrentChannelId(channel.id)} // <-- обновляем стор
           />
-        );
-      })}
-        
-    </Stack>
+        ))}
+      </Stack>
+    </ScrollArea>
   );
 }

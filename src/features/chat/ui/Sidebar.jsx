@@ -1,26 +1,26 @@
-import { Paper, Text, Button, Stack} from '@mantine/core';
+import { Paper, Text, Button, Stack } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
-// import { AddChannelModal } from '../../channel/ui/AddChannelModal';
-// import { RenameChannelModal } from '../../channel/ui/RenameChannelModal';
-// import { RemoveChannelModal } from '../../channel/ui/RemoveChannelModal';
+import { AddChannelModal } from '../../channel/ui/AddChannelModal';
+import { RenameChannelModal } from '../../channel/ui/RenameChannelModal';
+import { RemoveChannelModal } from '../../channel/ui/RemoveChannelModal';
 import useChatStore from '../../../app/store/chatStore';
 import { ChannelList } from './ChannelList';
 import { useTranslation } from 'react-i18next';
 
-export function Sidebar({ channels }) {
+export function Sidebar({ channels, activeChannelId }) { // <-- добавили пропс
   const { t } = useTranslation();
 
-  // const isAddModalOpen = useChatStore((state) => state.isAddModalOpen);
+  const isAddModalOpen = useChatStore((state) => state.isAddModalOpen);
   const openAddModal = useChatStore((state) => state.openAddModal);
-  // const closeAddModal = useChatStore((state) => state.closeAddModal);
+  const closeAddModal = useChatStore((state) => state.closeAddModal);
 
-  // const isRenameModalOpen = useChatStore((state) => state.isRenameModalOpen);
-  // const closeRenameModal = useChatStore((state) => state.closeRenameModal);
-  // const channelToRename = useChatStore((state) => state.channelToRename);
+  const isRenameModalOpen = useChatStore((state) => state.isRenameModalOpen);
+  const closeRenameModal = useChatStore((state) => state.closeRenameModal);
+  const channelToRename = useChatStore((state) => state.channelToRename);
 
-  // const isRemoveModalOpen = useChatStore((state) => state.isRemoveModalOpen);
-  // const closeRemoveModal = useChatStore((state) => state.closeRemoveModal);
-  // const channelToRemove = useChatStore((state) => state.channelToRemove);
+  const isRemoveModalOpen = useChatStore((state) => state.isRemoveModalOpen);
+  const closeRemoveModal = useChatStore((state) => state.closeRemoveModal);
+  const channelToRemove = useChatStore((state) => state.channelToRemove);
 
   return (
     <Paper withBorder p="sm" style={{ width: 250, height: '100%' }}>
@@ -34,10 +34,10 @@ export function Sidebar({ channels }) {
         >
           {t('channels.add')}
         </Button>
-          <ChannelList channels={channels} />
+          <ChannelList channels={channels} activeChannelId={activeChannelId} /> {/* <-- передаем пропс */}
       </Stack>
 
-      {/* <AddChannelModal
+      <AddChannelModal
         opened={isAddModalOpen}
         onClose={closeAddModal}
         existingChannels={channels}
@@ -52,7 +52,7 @@ export function Sidebar({ channels }) {
         opened={isRemoveModalOpen}
         onClose={closeRemoveModal}
         channel={channelToRemove}
-      /> */}
+      />
     </Paper>
   );
 }
