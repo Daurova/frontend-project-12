@@ -5,7 +5,7 @@ import HomePage from './pages/home/HomePage'
 import NotFoundPage from './pages/notFound/NotFoundPage'
 import ProtectedRoute from './shared/ui/ProtectedRoute'
 import SignUpPage from './pages/signUp/SignUpPage'
-import LogInPage from './pages/login/LoginPage'
+import LogInPage from './pages/login/LogInPage'
 // import { Header } from './widgets/header/ui/Header'
 
 function App({socket}) {
