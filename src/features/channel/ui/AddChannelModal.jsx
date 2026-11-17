@@ -20,7 +20,7 @@ export function AddChannelModal({ opened, onClose, existingChannels }) {
         if (!value) return t('validation.required');
         if (value.length < 3) return t('validation.usernameMin');
         if (value.length > 20) return t('validation.usernameMax');
-        // if (filter.check(value)) return t('validation.channelNameProfanity'); // <--- ВРЕМЕННО ОТКЛЮЧЕНО
+        if (filter.check(value)) return t('validation.channelNameProfanity'); 
         if (existingChannels?.some((c) => c.name === value)) {
           return t('validation.channelNameExists');
         }
