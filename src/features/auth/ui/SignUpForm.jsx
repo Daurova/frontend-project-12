@@ -6,13 +6,23 @@ import { useTranslation } from 'react-i18next';
 import { signup } from '../../../shared/auth';
 import useAuthStore from '../../../app/store/authStore';
 
+// 1. Статичные сообщения об ошибках (без t())
+const ERRORS = {
+  required: 'This field is required',
+  usernameMin: 'Username must be at least 3 characters',
+  usernameMax: 'Username cannot exceed 20 characters',
+  passwordMin: 'Password must be at least 6 characters',
+  passwordMismatch: 'Passwords do not match',
+};
+
 function SignUpForm() {
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const authLogin = useAuthStore((state) => state.login);
 
+  // 2. useForm теперь использует статичные строки
   const form = useForm({
     initialValues: {
       username: '',
@@ -21,19 +31,19 @@ function SignUpForm() {
     },
     validate: {
       username: (value) => {
-        if (!value) return t('validation.required');
-        if (value.length < 3) return t('validation.usernameMin');
-        if (value.length > 20) return t('validation.usernameMax');
+        if (!value) return ERRORS.required;
+        if (value.length < 3) return ERRORS.usernameMin;
+        if (value.length > 20) return ERRORS.usernameMax;
         return null;
       },
       password: (value) => {
-        if (!value) return t('validation.required');
-        if (value.length < 6) return t('validation.passwordMin');
+        if (!value) return ERRORS.required;
+        if (value.length < 6) return ERRORS.passwordMin;
         return null;
       },
       confirmPassword: (value, values) => {
-        if (!value) return t('validation.required');
-        if (value !== values.password) return t('validation.passwordMismatch');
+        if (!value) return ERRORS.required;
+        if (value !== values.password) return ERRORS.passwordMismatch;
         return null;
       },
     },
@@ -48,6 +58,7 @@ function SignUpForm() {
       authLogin(data.token, data.username);
       navigate('/');
     } catch (err) {
+      // Здесь t() можно оставить, так как это редкое событие (ошибка API)
       setError(t(`errors.${err.message}`));
     } finally {
       setLoading(false);
@@ -92,5 +103,4 @@ function SignUpForm() {
   );
 }
 
-
-export default SignUpForm
+export default SignUpForm;
