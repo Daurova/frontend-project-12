@@ -5,7 +5,7 @@ import { Sidebar } from '../../features/chat/ui/Sidebar';
 import { ChatArea } from '../../features/chat/ui/ChatArea';
 import { useSocketEvent } from '../../shared/lib/useSocketEvent';
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react'; // <-- добавили useRef
 import useChatStore from '../../app/store/chatStore';
 import { useTranslation } from 'react-i18next';
 import { notifications } from '@mantine/notifications';
@@ -17,6 +17,9 @@ export function HomePage({ socket }) {
 
   const currentChannelId = useChatStore((state) => state.currentChannelId);
   const setCurrentChannelId = useChatStore((state) => state.setCurrentChannelId);
+
+  // Флаг, чтобы выбрать канал только один раз при старте
+  const hasSetInitialChannel = useRef(false);
 
   const { data: channels, isLoading: channelsLoading, error: channelsError } = useChannels();
   const { data: messages, isLoading: messagesLoading, error: messagesError } = useMessages();
@@ -65,7 +68,10 @@ export function HomePage({ socket }) {
   }, [t]);
 
   useEffect(() => {
-    if (channels?.length && !currentChannelId) {
+    // Добавили проверку hasSetInitialChannel.current, чтобы не было цикла
+    if (channels?.length && !currentChannelId && !hasSetInitialChannel.current) {
+      hasSetInitialChannel.current = true; // Ставим флаг, что выбор сделан
+      
       const generalChannel = channels.find((c) => c.name === 'general');
       if (generalChannel) {
         setCurrentChannelId(generalChannel.id);
@@ -74,8 +80,7 @@ export function HomePage({ socket }) {
         setCurrentChannelId(channels[0].id);
       }
     }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [channels?.length, currentChannelId, setCurrentChannelId]); 
+  }, [channels, currentChannelId, setCurrentChannelId]);
 
   if (channelsLoading || messagesLoading) return <Loader />;
 
