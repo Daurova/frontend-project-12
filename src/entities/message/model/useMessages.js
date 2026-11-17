@@ -32,7 +32,7 @@ export const useSendMessage = () => {
       queryClient.setQueryData(['messages'], (old = []) => [
         ...old,
         {
-          id: `temp-${Date.now()}`,
+          id: `temp-${Math.random().toString(36).substring(2, 9)}`, // <--- ИСПРАВЛЕНО ТУТ
           body: newMessage.body,
           channelId: newMessage.channelId,
           username,
