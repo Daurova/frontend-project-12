@@ -1,8 +1,18 @@
 import { Navigate } from 'react-router-dom';
-import useAuthStore from '../../app/store/authStore';
 
 function ProtectedRoute({ children }) {
-  const token = useAuthStore((state) => state.token);
+  // Берем данные напрямую из localStorage
+  const authData = localStorage.getItem('auth-storage');
+  let token = null;
+  
+  if (authData) {
+    try {
+      token = JSON.parse(authData)?.state?.token;
+    } catch (e) {
+      // ignore
+      console.log(e)
+    }
+  }
   
   if (!token) {
     return <Navigate to="/login" replace />;
