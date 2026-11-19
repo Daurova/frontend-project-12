@@ -51,7 +51,8 @@ function LoginForm() {
       setLoading(false);
     }
   };
-
+ console.count('LoginForm render');
+ 
   return (
     <Paper withBorder shadow="md" p={30} mt={30} radius="md">
       <Title order={2} ta="center" mb="lg">
