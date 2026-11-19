@@ -1,7 +1,7 @@
 import { useForm } from '@mantine/form';
 import { Modal, TextInput, Button, Stack, Group } from '@mantine/core';
 import { useCreateChannel } from '../../../entities/channel/model/useChannels';
-import { useEffect, useRef } from 'react';
+// import { useEffect, useRef } from 'react'; // <--- убрали useEffect и useRef
 import { useTranslation } from 'react-i18next';
 import { notifications } from '@mantine/notifications';
 import filter from 'leo-profanity';
@@ -11,7 +11,7 @@ filter.loadDictionary('ru');
 export function AddChannelModal({ opened, onClose, existingChannels }) {
   const {t} = useTranslation()
   const { mutate: createChannel, isPending } = useCreateChannel();
-  const inputRef = useRef(null);
+  // const inputRef = useRef(null); // <--- убрали
 
   const form = useForm({
     initialValues: { name: '' },
@@ -29,12 +29,7 @@ export function AddChannelModal({ opened, onClose, existingChannels }) {
     },
   });
 
-  // Фокус на поле при открытии
-  useEffect(() => {
-    if (opened) {
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }
-  }, [opened]);
+  // useEffect с фокусом УДАЛЕН
 
   const handleSubmit = (values) => {
     createChannel(values.name, {
@@ -51,11 +46,12 @@ export function AddChannelModal({ opened, onClose, existingChannels }) {
   };
 
   return (
-    <Modal opened={opened} onClose={onClose} title={t('channels.add')}>
+    // Добавили trapFocus={false}
+    <Modal opened={opened} onClose={onClose} title={t('channels.add')} trapFocus={false}>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack>
           <TextInput
-            ref={inputRef}
+            // ref={inputRef} // <--- убрали
             label={t('channels.channelName')}
             placeholder={t('channels.channelPlaceholder')}
             disabled={isPending}
