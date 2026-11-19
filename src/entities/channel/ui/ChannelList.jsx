@@ -1,9 +1,22 @@
 import { NavLink, Stack, ScrollArea } from '@mantine/core';
-import useChatStore from '../../../app/store/chatStore';
+import { useSearchParams } from 'react-router-dom';
 
 export function ChannelList({ channels }) {
-  const currentChannelId = useChatStore((state) => state.currentChannelId);
-  const setCurrentChannelId = useChatStore((state) => state.setCurrentChannelId);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Получаем текущий канал из URL
+  const currentChannelId = searchParams.get('channel') ?? null;
+
+  // Обновляем URL при выборе канала
+  const setCurrentChannelId = (id) => {
+    const params = new URLSearchParams(searchParams);
+    if (id) {
+      params.set('channel', id);
+    } else {
+      params.delete('channel');
+    }
+    setSearchParams(params, { replace: true });
+  };
 
   return (
     <ScrollArea h="100%">
