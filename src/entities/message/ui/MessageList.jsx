@@ -5,7 +5,7 @@ export function MessageList({ messages }) {
     <Stack gap="xs" style={{ flex: 1, overflow: 'auto' }}>
       {messages?.map((msg) => (
         <div key={msg.id}>
-          <Text fw={500}>{msg.username}</Text>
+          <Text fw={500}>{msg.username.username}</Text>
           <Text>{msg.body}</Text>
         </div>
       ))}
