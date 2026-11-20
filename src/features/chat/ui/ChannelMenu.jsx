@@ -12,6 +12,7 @@ export function ChannelMenu({ channel }) {
         <ActionIcon
           variant="subtle"
           onClick={(e) => e.stopPropagation()} // ← чтобы не переключался канал
+          aria-label="Управление каналом"
         >
           <IconDots size={16} />
         </ActionIcon>
