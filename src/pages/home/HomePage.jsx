@@ -23,6 +23,7 @@ export function HomePage({ socket }) {
 
   // Читаем из стора только то, что нужно для рендера
   const currentChannelId = useChatStore((state) => state.currentChannelId);
+  
   // Удаляем setCurrentChannelId, так как HomePage его не использует
   
   const { data: channels, isLoading: channelsLoading, error: channelsError } = useChannels();
@@ -66,8 +67,12 @@ export function HomePage({ socket }) {
   }, [t]);
 
   // Логика выбора канала (берем из стора)
-  const activeChannelId = currentChannelId;
-
+// Если в сторе пусто, берем ID канала general из загруженных каналов
+const activeChannelId = currentChannelId || 
+  (channels?.length 
+    ? (channels.find((c) => c.name === 'general') || channels[0]).id 
+    : null);
+    
   if (channelsLoading || messagesLoading) return <Loader />;
 
   return (
