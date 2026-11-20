@@ -27,7 +27,7 @@ export function Sidebar({ channels, activeChannelId }) { // <-- добавили
       <Stack gap="xs" h="100%">
         <Text fw={700}>{t('channels.title')}</Text>
         <Button
-          leftSection={<IconPlus size={16} />}
+          // leftSection={<IconPlus size={16} />}
           variant="light"
           fullWidth
           onClick={openAddModal}

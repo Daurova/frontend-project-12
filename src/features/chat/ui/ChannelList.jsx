@@ -16,7 +16,7 @@ export function ChannelList({ channels, activeChannelId }) {
               style={{ flex: 1 }}
               onClick={() => setCurrentChannelId(channel.id)}
             >
-              #{channel.name}
+              # {channel.name}
             </Button>
             
             {(channel.name !== 'general' && channel.name !== 'random') && (
