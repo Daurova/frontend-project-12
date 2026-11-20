@@ -32,7 +32,7 @@ export function Sidebar({ channels, activeChannelId }) { // <-- добавили
           fullWidth
           onClick={openAddModal}
         >
-          {t('channels.add')}
+          {'+'}
         </Button>
           <ChannelList channels={channels} activeChannelId={activeChannelId} /> {/* <-- передаем пропс */}
       </Stack>
