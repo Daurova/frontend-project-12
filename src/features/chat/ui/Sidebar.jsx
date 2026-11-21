@@ -21,7 +21,7 @@ export function Sidebar({ channels, activeChannelId }) { // <-- добавили
   const isRemoveModalOpen = useChatStore((state) => state.isRemoveModalOpen);
   const closeRemoveModal = useChatStore((state) => state.closeRemoveModal);
   const channelToRemove = useChatStore((state) => state.channelToRemove);
-  console.logI('gen')
+  console.log('gen')
   return (
     <Paper withBorder p="sm" style={{ width: 250, height: '100%' }}>
       <Stack gap="xs" h="100%">
