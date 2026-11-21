@@ -45,7 +45,7 @@ export function MessageForm({ channelId }) {
             placeholder={t('messages.placeholder')}       
             style={{ flex: 1 }}
             disabled={isPending}
-            aria-label="Новое сообщение"  // <--- ДОБАВЬ ЭТУ СТРОКУ
+            aria-label="Новое сообщение"  
             {...form.getInputProps('body')}
           />
           <Button type="submit" loading={isPending}>
