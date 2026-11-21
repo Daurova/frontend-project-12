@@ -18,7 +18,7 @@ export function ChatArea({ channels, messages, activeChannelId }) { // <-- до�
 
   return (
     <Paper withBorder p="md" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <Title order={3} mb="md"># {currentChannel.name}</Title>
+      <Title order={3} mb="md">{`# ${currentChannel.name}`}</Title>
       <MessageList messages={channelMessages} />
       <MessageForm channelId={activeChannelId} />
     </Paper>
