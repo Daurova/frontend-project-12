@@ -5,16 +5,15 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { notifications } from '@mantine/notifications';
 
-
 export function RenameChannelModal({ opened, onClose, channel, existingChannels }) {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const { mutate: renameChannel, isPending } = useRenameChannel();
   const inputRef = useRef(null);
 
   const form = useForm({
     initialValues: { name: channel?.name || '' },
     validate: {
-       name: (value) => {
+      name: (value) => {
         if (!value) return t('validation.required');
         if (value.length < 3) return t('validation.usernameMin');
         if (value.length > 20) return t('validation.usernameMax');
@@ -52,11 +51,12 @@ export function RenameChannelModal({ opened, onClose, channel, existingChannels 
     );
   };
 
-   return (
+  return (
     <Modal opened={opened} onClose={onClose} title={t('channels.rename')}>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack>
           <TextInput
+            id="name" // <--- ДОБАВЛЕНО
             ref={inputRef}
             label={t('channels.newChannelName')}
             placeholder={t('channels.channelPlaceholder')}
@@ -68,7 +68,7 @@ export function RenameChannelModal({ opened, onClose, channel, existingChannels 
               {t('channels.cancel')}
             </Button>
             <Button type="submit" loading={isPending}>
-              {t('channels.send')}
+              {t('channels.rename')} {/* <--- ИСПРАВЛЕНО с channels.send на channels.rename */}
             </Button>
           </Group>
         </Stack>
