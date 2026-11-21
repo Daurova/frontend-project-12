@@ -8,7 +8,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from "./app/providers/query-client-provider";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./shared/i18n/index";
-// import { Notifications } from "@mantine/notifications";
+import { Notifications } from "@mantine/notifications";
 // import * as Sentry from "@sentry/react";
 
 
@@ -25,7 +25,7 @@ const init = async (socket) => {
         <I18nextProvider i18n={i18n}>            
 
       <MantineProvider>   
-        {/* <Notifications position="top-center"/>    */}
+        <Notifications position="top-center"/>   
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>   
             {/* <Sentry.ErrorBoundary fallback={<p>Что-то пошло не так</p>}> */}
