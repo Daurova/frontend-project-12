@@ -1,5 +1,7 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import { playwright } from '@vitest/browser-playwright'
+
 
 export default defineConfig({
   plugins: [react()],
@@ -18,6 +20,16 @@ export default defineConfig({
     },
   },
   test: {         // <--- ВОТ СЮДА
-    css: true,    // <--- ВОТ СЮДА
+    css: true, 
+    testTimeout: 30000, 
+    browser: {
+      provider: playwright(),
+      // Заставляем Playwright сохранять трейс при падении
+      trace: {
+        mode: 'retain-on-failure',
+        tracesDir: './tmp/artifacts/traces', // <--- ДОБАВЬ ЭТО
+      },
+    },
+    
   },
 })
