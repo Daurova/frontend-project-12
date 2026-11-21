@@ -19,7 +19,7 @@ export default defineConfig({
       },
     },
   },
-  test: {         // <--- ВОТ СЮДА
+  test: {         
     css: true, 
     testTimeout: 30000, 
     browser: {
