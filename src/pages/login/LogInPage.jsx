@@ -1,6 +1,6 @@
 import { Text, Anchor, Container } from '@mantine/core';
 import { Navigate, Link } from 'react-router-dom';
-import useAuthStore from '../../app/store/authStore';
+import { useAuthStore } from '../../app/store/useAuthStore';
 import LoginForm from '../../features/auth/ui/LoginForm';
 
 function LogInPage() {

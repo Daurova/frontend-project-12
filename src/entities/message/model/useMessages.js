@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import useAuthStore from '../../../app/store/authStore';
+import { useAuthStore } from '../../../app/store/useAuthStore';
 import { getMessages, sendMessage } from '../api/message-api';
 
 export const useMessages = () => {

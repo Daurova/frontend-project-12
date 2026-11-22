@@ -1,6 +1,6 @@
 import { Menu, ActionIcon } from '@mantine/core';
 import { IconDots, IconPencil, IconTrash } from '@tabler/icons-react';
-import useChatStore from '../../../app/store/chatStore';
+import { useChatStore } from '../../../app/store/useChatStore';
 
 export function ChannelMenu({ channel }) {
   const openRenameModal = useChatStore((state) => state.openRenameModal);

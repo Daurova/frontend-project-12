@@ -1,7 +1,7 @@
 import { Modal, Button, Text, Group } from '@mantine/core';
 import { useRemoveChannel } from '../../../entities/channel/model/useChannels';
 import { useQueryClient } from '@tanstack/react-query';
-import useChatStore from '../../../app/store/chatStore'; 
+import { useChatStore } from '../../../app/store/useChatStore'; 
 import { useTranslation } from 'react-i18next'; 
 import { notifications } from '@mantine/notifications';
 

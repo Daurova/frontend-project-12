@@ -1,7 +1,7 @@
 import { Group, Anchor, Button, Container } from '@mantine/core';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';   
-import useAuthStore from '../../../app/store/authStore';
+import { useAuthStore } from '../../../app/store/useAuthStore';
 
 export function Header() {
   const { t } = useTranslation();                 

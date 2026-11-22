@@ -6,7 +6,7 @@ import { ChatArea } from '../../features/chat/ui/ChatArea';
 import { useSocketEvent } from '../../shared/lib/useSocketEvent';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import useChatStore from '../../app/store/chatStore';
+import { useChatStore } from '../../app/store/useChatStore';
 import { useTranslation } from 'react-i18next';
 import { notifications } from '@mantine/notifications';
 

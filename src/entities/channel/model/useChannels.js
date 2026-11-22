@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import useAuthStore from '../../../app/store/authStore';
+import { useAuthStore } from '../../../app/store/useAuthStore';
 import { createChannel, getChannels, removeChannel, renameChannel } from '../api/channel-api';
-import useChatStore from '../../../app/store/chatStore';
+import { useChatStore } from '../../../app/store/useChatStore';
 
 export const useChannels = () => {
   const token = useAuthStore((state) => state.token);

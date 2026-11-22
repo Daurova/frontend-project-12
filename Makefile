@@ -6,3 +6,5 @@ start:
 
 install: 
 	npm install
+
+.PHONY: install build start

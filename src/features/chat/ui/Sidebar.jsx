@@ -3,7 +3,7 @@ import { IconPlus } from '@tabler/icons-react';
 import { AddChannelModal } from '../../channel/ui/AddChannelModal';
 import { RenameChannelModal } from '../../channel/ui/RenameChannelModal';
 import { RemoveChannelModal } from '../../channel/ui/RemoveChannelModal';
-import useChatStore from '../../../app/store/chatStore';
+import { useChatStore } from '../../../app/store/useChatStore';
 import { ChannelList } from './ChannelList';
 import { useTranslation } from 'react-i18next';
 

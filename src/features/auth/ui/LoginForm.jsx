@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { login } from '../../../shared/auth.js';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAuthStore from '../../../app/store/authStore.js';
+import { useAuthStore } from '../../../app/store/useAuthStore.js';
 
 function LoginForm() {
   const { t } = useTranslation();

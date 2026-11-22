@@ -1,5 +1,5 @@
 import { Button, Stack, ScrollArea, Group } from '@mantine/core';
-import useChatStore from '../../../app/store/chatStore';
+import { useChatStore } from '../../../app/store/useChatStore';
 import { ChannelMenu } from './ChannelMenu';
 
 export function ChannelList({ channels, activeChannelId }) {

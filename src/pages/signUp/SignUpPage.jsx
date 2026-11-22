@@ -1,6 +1,6 @@
 import { Paper, Title, Text, Anchor, Container } from '@mantine/core';
 // import { Navigate, Link } from 'react-router-dom';
-// import useAuthStore from '../../app/store/authStore';
+// import { useAuthStore } from '../../app/store/useAuthStore';
 import SignUpForm  from '../../features/auth/ui/SignUpForm';
 
 function SignUpPage() {
