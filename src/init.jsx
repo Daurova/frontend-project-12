@@ -9,7 +9,9 @@ import { queryClient } from "./app/providers/query-client-provider";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./shared/i18n/index";
 import { Notifications } from "@mantine/notifications";
-// import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react";
+import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 
 
 const logSocket = debug("chat:socket");
@@ -22,15 +24,14 @@ const init = async (socket) => {
   socket.on("newMessage", logSocket);
 
   return (
-        <I18nextProvider i18n={i18n}>            
-
+    <I18nextProvider i18n={i18n}>            
       <MantineProvider>   
         <Notifications position="top-center"/>   
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>   
-            {/* <Sentry.ErrorBoundary fallback={<p>Что-то пошло не так</p>}> */}
+            <Sentry.ErrorBoundary fallback={<p>Что-то пошло не так</p>}>
             <App socket = {socket} />
-            {/* </Sentry.ErrorBoundary> */}
+            </Sentry.ErrorBoundary>
           </BrowserRouter>  
         <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
